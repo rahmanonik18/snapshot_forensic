@@ -1,0 +1,163 @@
+{
+    "status": 0,
+    "data": {
+        "trip_count": 1,
+        "trips": [
+            {
+                "start_time": 1703868940.0,
+                "start_location": {
+                    "city": "Baton Rouge",
+                    "state": "Louisiana",
+                    "country": "USA"
+                },
+                "end_location": {
+                    "city": "Baton Rouge",
+                    "state": "Louisiana",
+                    "country": "USA"
+                },
+                "end_time": 1703869149.0,
+                "start_latitude": 30.3971559,
+                "start_longitude": -91.1763353,
+                "end_latitude": 30.4064805,
+                "end_longitude": -91.1803525,
+                "start_battery": 0.76953125,
+                "end_battery": 0.76953125,
+                "improved_start_latitude": 0.0,
+                "improved_start_longitude": 0.0,
+                "distance": 1763.5826416015625,
+                "brake_distance": 1720.36474609375,
+                "valid_usage_time": 184.0,
+                "valid_call_time": 209.0,
+                "version": 0,
+                "id": "425264a6d95aee950fad819da0a6c89d",
+                "device": "088cf33c-2ff3-4811-a4b3-e8e36194a84f",
+                "driver": "1b9d3b6a-baac-4c53-bd06-58a95f47c773",
+                "start_tz_offset": "+0700",
+                "end_tz_offset": "+0700",
+                "backend_version_hash": "8d2b6d9a0c039c16b69f2ae2881b5b00",
+                "power_saving": false,
+                "events": [
+                    {
+                        "start_timestamp": 1703868940.0,
+                        "end_timestamp": 1703869149.0,
+                        "start_latitude": 30.397102395,
+                        "start_longitude": -91.176385707,
+                        "end_latitude": 30.4064805,
+                        "end_longitude": -91.1803525,
+                        "start_tz_offset": "+0700",
+                        "end_tz_offset": "+0700",
+                        "type": "VALIDPERIOD",
+                        "kind": "CALL"
+                    },
+                    {
+                        "start_timestamp": 1703868950.0,
+                        "end_timestamp": 1703869009.0,
+                        "start_latitude": 30.397172883,
+                        "start_longitude": -91.176486235,
+                        "end_latitude": 30.399411268,
+                        "end_longitude": -91.173422531,
+                        "start_tz_offset": "+0700",
+                        "end_tz_offset": "+0700",
+                        "type": "VALIDPERIOD",
+                        "kind": "USAGE"
+                    },
+                    {
+                        "start_timestamp": 1703869017.0,
+                        "end_timestamp": 1703869142.0,
+                        "start_latitude": 30.399411268,
+                        "start_longitude": -91.173422531,
+                        "end_latitude": 30.4064805,
+                        "end_longitude": -91.1803525,
+                        "start_tz_offset": "+0700",
+                        "end_tz_offset": "+0700",
+                        "type": "VALIDPERIOD",
+                        "kind": "USAGE"
+                    }
+                ],
+                "transit_mode": {
+                    "public_transit": 0.0,
+                    "airplane": 0.0,
+                    "multi": 0.0,
+                    "simple_outlier": 0.0,
+                    "short": 0.0,
+                    "bike": 0.0,
+                    "not_on_road": 0.0,
+                    "friendly_prediction": "CAR",
+                    "prediction": "mot_ensemble",
+                    "display": "CAR"
+                },
+                "corrections": {
+                    "transit_mode": "UNSET",
+                    "operator_mode": "UNSET",
+                    "exit_door": "UNSET",
+                    "vehicle_association": "UNSET",
+                    "did_passenger_use_drivers_phone": false,
+                    "source": "UNSET",
+                    "timestamp": 0
+                },
+                "exit_door": {
+                    "friendly_prediction": "UNSET",
+                    "display": "UNSET",
+                    "method": "UNKNOWN",
+                    "certainty": 0.0
+                },
+                "processed": 1703876215.644093,
+                "bruce_version": "2.22.0",
+                "operator_mode": {
+                    "friendly_prediction": "DRIVER",
+                    "display": "DRIVER",
+                    "method": "di_ensemble_final_3_no_survey",
+                    "certainty": 0.6573559045791626,
+                    "driver": {
+                        "friendly_prediction": "DRIVER",
+                        "display": "DRIVER",
+                        "method": "di_ensemble_final_3_no_survey",
+                        "certainty": 0.6573559045791626
+                    },
+                    "group": {
+                        "operator_mode": {
+                            "friendly_prediction": "UNSET",
+                            "display": "UNSET",
+                            "method": "",
+                            "certainty": 0.0
+                        },
+                        "drivers_in_family": [],
+                        "updated": 0.0
+                    }
+                },
+                "vehicle_association": {
+                    "friendly_prediction": "UNSET",
+                    "display": "UNSET",
+                    "method": "",
+                    "certainty": 0.0
+                },
+                "powered_percentage": 0.0,
+                "event_count": 4,
+                "dings": {
+                    "total": 0
+                },
+                "is_valid": true,
+                "scorer_valid_trips": "not_predicted_passenger",
+                "distraction_count": 0,
+                "distraction_time": 0.0,
+                "focused_drive": true,
+                "prodriver_trip_level": {
+                    "friendly_prediction": "UNKNOWN",
+                    "display": "UNKNOWN",
+                    "method": "prodriver_trip_detector",
+                    "certainty": 0.0
+                },
+                "prodriver_driver_level": {
+                    "friendly_prediction": "UNKNOWN",
+                    "display": "UNKNOWN",
+                    "method": "prodriver_detector",
+                    "certainty": 0.0
+                },
+                "company_id": "2212aa38-0ada-40a3-ace8-fd1096302d8d",
+                "rated_distracted_driving": true,
+                "phone_usage_percent": 0.0
+            }
+        ]
+    },
+    "message": ""
+}

@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Map and Timeline Visualization</title>
+    <!-- <style>
+        .table-container {
+             width: 100%; 
+            /*padding: 20px;*/
+           
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+
+        #details-container {
+        /* width: 100%; */
+        display: flex;
+        padding: 20px;
+       }
+
+#timeline-container {
+    flex: 1;
+}
+
+#map-container {
+    flex: 1;
+    height: 400px; /* Adjust as needed */
+}
+
+
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+   /* Adjusted vertical timeline styles for compact design */
+   .timeline {
+        position: relative;
+        padding: 10px 0; /* Reduced vertical padding */
+        margin-top: 10px;
+        background-color: aliceblue;
+    }
+
+    .timeline::after {
+        content: '';
+        position: absolute;
+        width: 2px; /* Thinner central line */
+        background-color: #f2f2f2;
+        top: 0;
+        bottom: 0;
+        left: 50%;
+        margin-left: -1px;
+    }
+
+    .timeline-event {
+        padding: 5px 20px; /* Reduced padding for less vertical space */
+        position: relative;
+        background-color: inherit;
+        width: 40%;
+    }
+
+    .timeline-event::after {
+        content: '';
+        position: absolute;
+        width: 15px; /* Smaller circles */
+        height: 15px;
+        background-color: white;
+        border: 2px solid #f2f2f2; /* Thinner border for the circles */
+        top: 50%;
+        transform: translateY(-50%);
+        border-radius: 50%;
+        z-index: 1;
+    }
+
+    .timeline-event.left {
+        left: 0;
+    }
+
+    .timeline-event.left::after {
+        right: -7.5px; /* Half of the circle's width */
+    }
+
+    .timeline-event.right {
+        left: 50%;
+    }
+
+    .timeline-event.right::after {
+        left: -7.5px; /* Half of the circle's width */
+    }
+
+    .timeline-content {
+        padding: 10px; /* Reduced padding for more compact content boxes */
+        background-color: white;
+        position: relative;
+        border-radius: 6px;
+        font-size: 0.8em; /* Smaller text size */
+    }
+
+    /* Smaller headers within timeline content */
+    .timeline-content h4 {
+        font-size: 0.9em;
+        margin: 0 0 5px; /* Reduced margin for tighter grouping */
+    }
+
+    /* Smaller paragraph text within timeline content */
+    .timeline-content p {
+        font-size: 0.8em;
+        margin: 0; /* Reduced margin for tighter grouping */
+    }
+
+   /* Vertical timeline styles
+   .timeline {
+        position: relative;
+        padding: 20px 0;
+        margin-top: 20px;
+        background-color: aliceblue;
+    }
+
+    .timeline::after {
+        content: '';
+        position: absolute;
+        width: 6px;
+        background-color: #f2f2f2;
+        top: 0;
+        bottom: 0;
+        left: 50%;
+        margin-left: -3px;
+    }
+
+    .timeline-event {
+        padding: 10px 40px;
+        position: relative;
+        background-color: inherit;
+        width: 50%;
+    }
+
+    .timeline-event::after {
+        content: '';
+        position: absolute;
+        width: 25px;
+        height: 25px;
+        background-color: white;
+        border: 4px solid #f2f2f2;
+        top: 15px;
+        border-radius: 50%;
+        z-index: 1;
+    }
+
+    .timeline-event.left {
+        left: 0;
+    }
+
+    .timeline-event.right {
+        left: 50%;
+    }
+
+    .timeline-content {
+        padding: 20px 30px;
+        background-color: white;
+        position: relative;
+        border-radius: 6px;
+    } */
+
+
+    </style> -->
+<!-- <style>
+.table-container {
+    width: 100%; 
+/*padding: 20px;*/
+
+}
+table {
+width: 100%;
+border-collapse: collapse;
+}
+th, td {
+border: 1px solid black;
+padding: 8px;
+text-align: left;
+}
+th {
+background-color: #f2f2f2;
+}
+
+#details-container {
+width: 100%;
+display: flex;
+padding: 20px;
+}
+
+#timeline-container {
+flex: 1;
+}
+
+#map-container {
+flex: 1;
+height: 400px; /* Adjust as needed */
+}
+
+
+.modal {
+display: none; /* Hidden by default */
+position: fixed; /* Stay in place */
+z-index: 1; /* Sit on top */
+left: 0;
+top: 0;
+width: 100%; /* Full width */
+height: 100%; /* Full height */
+overflow: auto; /* Enable scroll if needed */
+background-color: rgb(0,0,0); /* Fallback color */
+background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.modal-content {
+background-color: #fefefe;
+margin: 15% auto; /* 15% from the top and centered */
+padding: 20px;
+border: 1px solid #888;
+width: 80%; /* Could be more or less, depending on screen size */
+}
+
+.close {
+color: #aaa;
+float: right;
+font-size: 28px;
+font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+color: black;
+text-decoration: none;
+cursor: pointer;
+}
+
+/* Adjusted vertical timeline styles for compact design */
+.timeline {
+position: relative;
+padding: 10px 0; /* Reduced vertical padding */
+margin-top: 10px;
+background-color: aliceblue;
+}
+
+.timeline::after {
+content: '';
+position: absolute;
+width: 2px; /* Thinner central line */
+background-color: #f2f2f2;
+top: 0;
+bottom: 0;
+left: 50%;
+margin-left: -1px;
+}
+
+.timeline-event {
+padding: 5px 20px; /* Reduced padding for less vertical space */
+position: relative;
+background-color: inherit;
+width: 40%;
+}
+
+.timeline-event::after {
+content: '';
+position: absolute;
+width: 15px; /* Smaller circles */
+height: 15px;
+background-color: white;
+border: 2px solid #f2f2f2; /* Thinner border for the circles */
+top: 50%;
+transform: translateY(-50%);
+border-radius: 50%;
+z-index: 1;
+}
+
+.timeline-event.left {
+left: 0;
+}
+
+.timeline-event.left::after {
+right: -7.5px; /* Half of the circle's width */
+}
+
+.timeline-event.right {
+left: 50%;
+}
+
+.timeline-event.right::after {
+left: -7.5px; /* Half of the circle's width */
+}
+
+.timeline-content {
+padding: 10px; /* Reduced padding for more compact content boxes */
+background-color: white;
+position: relative;
+border-radius: 6px;
+font-size: 0.8em; /* Smaller text size */
+}
+
+/* Smaller headers within timeline content */
+.timeline-content h4 {
+font-size: 0.9em;
+margin: 0 0 5px; /* Reduced margin for tighter grouping */
+}
+
+/* Smaller paragraph text within timeline content */
+.timeline-content p {
+font-size: 0.8em;
+margin: 0; /* Reduced margin for tighter grouping */
+}
+
+/* Vertical timeline styles
+.timeline {
+position: relative;
+padding: 20px 0;
+margin-top: 20px;
+background-color: aliceblue;
+}
+
+.timeline::after {
+content: '';
+position: absolute;
+width: 6px;
+background-color: #f2f2f2;
+top: 0;
+bottom: 0;
+left: 50%;
+margin-left: -3px;
+}
+
+.timeline-event {
+padding: 10px 40px;
+position: relative;
+background-color: inherit;
+width: 50%;
+}
+
+.timeline-event::after {
+content: '';
+position: absolute;
+width: 25px;
+height: 25px;
+background-color: white;
+border: 4px solid #f2f2f2;
+top: 15px;
+border-radius: 50%;
+z-index: 1;
+}
+
+.timeline-event.left {
+left: 0;
+}
+
+.timeline-event.right {
+left: 50%;
+}
+
+.timeline-content {
+padding: 20px 30px;
+background-color: white;
+position: relative;
+border-radius: 6px;
+} */
+
+
+</style> -->
+
+<style>
+    .table-container {
+         width: 100%; 
+        /*padding: 20px;*/
+       
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    th, td {
+        border: 1px solid black;
+        padding: 8px;
+        text-align: left;
+    }
+    th {
+        background-color: #f2f2f2;
+    }
+
+#details-container {
+width: 100%;
+display: flex;
+/* padding: 20px; */
+}
+
+#timeline-container {
+flex: 1;
+}
+
+#map-container {
+flex: 1;
+height: 400px; /* Adjust as needed */
+}
+
+
+.modal {
+display: none; /* Hidden by default */
+position: fixed; /* Stay in place */
+z-index: 1; /* Sit on top */
+left: 0;
+top: 0;
+width: 100%; /* Full width */
+height: 100%; /* Full height */
+overflow: auto; /* Enable scroll if needed */
+background-color: rgb(0,0,0); /* Fallback color */
+background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.modal-content {
+background-color: #fefefe;
+margin: 15% auto; /* 15% from the top and centered */
+padding: 20px;
+border: 1px solid #888;
+width: 80%; /* Could be more or less, depending on screen size */
+}
+
+.close {
+color: #aaa;
+float: right;
+font-size: 28px;
+font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+color: black;
+text-decoration: none;
+cursor: pointer;
+}
+
+/* Adjusted vertical timeline styles for compact design */
+.timeline {
+    position: relative;
+    padding: 10px 0; /* Reduced vertical padding */
+    margin-top: 10px;
+    background-color: aliceblue;
+}
+
+.timeline::after {
+    content: '';
+    position: absolute;
+    width: 2px; /* Thinner central line */
+    background-color: #f2f2f2;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    margin-left: -1px;
+}
+
+.timeline-event {
+    padding: 5px 20px; /* Reduced padding for less vertical space */
+    position: relative;
+    background-color: inherit;
+    width: 40%;
+}
+
+.timeline-event::after {
+    content: '';
+    position: absolute;
+    width: 15px; /* Smaller circles */
+    height: 15px;
+    background-color: white;
+    border: 2px solid #f2f2f2; /* Thinner border for the circles */
+    top: 50%;
+    transform: translateY(-50%);
+    border-radius: 50%;
+    z-index: 1;
+}
+
+.timeline-event.left {
+    left: 0;
+}
+
+.timeline-event.left::after {
+    right: -7.5px; /* Half of the circle's width */
+}
+
+.timeline-event.right {
+    left: 50%;
+}
+
+.timeline-event.right::after {
+    left: -7.5px; /* Half of the circle's width */
+}
+
+.timeline-content {
+    padding: 10px; /* Reduced padding for more compact content boxes */
+    background-color: white;
+    position: relative;
+    border-radius: 6px;
+    font-size: 0.8em; /* Smaller text size */
+}
+
+/* Smaller headers within timeline content */
+.timeline-content h4 {
+    font-size: 0.9em;
+    margin: 0 0 5px; /* Reduced margin for tighter grouping */
+}
+
+/* Smaller paragraph text within timeline content */
+.timeline-content p {
+    font-size: 0.8em;
+    margin: 0; /* Reduced margin for tighter grouping */
+}
+
+
+
+
+</style>
+
+
+</head>
+<body>
+
+     <!-- Div for displaying map and timeline -->
+     <div id="details-container" style="display: none;">
+        <div id="map-container" style="width:50%; float:left;">
+            <!-- Map will be displayed here -->
+        </div>
+        <div id="timeline-container" style="width:40%; float:right; margin-bottom: 20px !important;">
+            <!-- Timeline will be displayed here -->
+        </div>
+    </div>
+
+    <div class="table-container">
+        <div class="table-responsive">
+        <table>
+            <tr>
+                <th>Start Location</th>
+                <th>End Location</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>Distance (m)</th>
+                <th>Phone Usage (%)</th>
+            </tr>
+            {% for trip in trips %}
+                <tr>
+                    <td>{{ trip.start_location.city }}, {{ trip.start_location.state }}, {{ trip.start_location.country }}</td>
+                    <td>{{ trip.end_location.city }}, {{ trip.end_location.state }}, {{ trip.end_location.country }}</td>
+                    <td>{{ trip.start_time }}</td>
+                    <td>{{ trip.end_time }}</td>
+                    <td>{{ trip.distance }}</td>
+                    <td>{{ trip.phone_usage_percent }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+        </div>
+    </div>
+       
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script>
+
+    let map;
+
+    function initMap(data) {
+    // Define the map and set default options
+    map = new google.maps.Map(document.getElementById("map-container"), {
+    zoom: 12,
+    center: { lat: data.start_latitude, lng: data.start_longitude } // Centered on the geographical center of the contiguous USA
+    });
+    }    
+    // Function to get marker color based on event kind or type
+    function getMarkerColor(kind, type) {
+    // Define your color mappings
+    const kindColors = {
+    'CALL': 'blue',
+    'USAGE': 'green',
+    'PHONE_USAGE': 'red',
+    'DISTRACTION': 'orange',
+    'BRAKE': 'purple'
+    // Add more as needed
+    };
+
+    const typeColors = {
+    'VALIDPERIOD': 'lime',
+    'DANGEROUSMANEUVER': 'magenta',
+    'SPEEDING': 'yellow'
+    // Add more as needed
+    };
+
+      // Priority given to specific types
+      if (type === 'DANGEROUSMANEUVER' || type === 'SPEEDING') {
+        return typeColors[type];
+    }
+
+    // Default to kind color if no specific type color
+    return kindColors[kind] || 'gray';
+
+    // Prefer type color if it's defined, otherwise fall back to kind color
+    //return typeColors[type] || kindColors[kind] || 'gray'; // Default to gray
+    }
+
+    // Function to add markers to the map
+    // function addMarkersToMap(data) {
+
+    // const bounds = new google.maps.LatLngBounds();
+
+    
+
+    // // Add a marker for the start location
+    // const startMarker = new google.maps.Marker({
+    // position: new google.maps.LatLng(data.start_latitude, data.start_longitude),
+    // map: map,
+    // title: 'Start',
+    // icon: {
+    // path: google.maps.SymbolPath.CIRCLE,
+    // scale: 7,
+    // fillColor: 'green',
+    // fillOpacity: 0.8,
+    // strokeWeight: 0
+    // }
+    // });
+    // bounds.extend(startMarker.getPosition());
+
+    // // Add a marker for the end location
+    // const endMarker = new google.maps.Marker({
+    // position: new google.maps.LatLng(data.end_latitude, data.end_longitude),
+    // map: map,
+    // title: 'End',
+    // icon: {
+    // path: google.maps.SymbolPath.CIRCLE,
+    // scale: 7,
+    // fillColor: 'red',
+    // fillOpacity: 0.8,
+    // strokeWeight: 0
+    // }
+    // });
+    // bounds.extend(endMarker.getPosition());
+
+    // // Add markers for each event
+    // data.events.forEach(event => {
+    // const eventMarker = new google.maps.Marker({
+    // position: new google.maps.LatLng(event.start_latitude, event.start_longitude),
+    // map: map,
+    // title: `${event.kind} - ${event.type}`,
+    // icon: {
+    // path: google.maps.SymbolPath.CIRCLE,
+    // scale: 7,
+    // fillColor: getMarkerColor(event.kind, event.type),
+    // fillOpacity: 0.8,
+    // strokeWeight: 0
+    // }
+    // });
+
+    // // Use an info window to show event details when the marker is clicked
+    // const infoWindow = new google.maps.InfoWindow({
+    // content: `<div>Timestamp: ${new Date(event.start_timestamp * 1000).toLocaleString()}</div>
+    // <div>Kind: ${event.kind}</div>
+    // <div>Type: ${event.type}</div>`
+    // });
+
+    // eventMarker.addListener('click', () => {
+    // infoWindow.open(map, eventMarker);
+    // });
+
+    // bounds.extend(eventMarker.getPosition());
+    // });
+
+
+
+
+    // map.fitBounds(bounds);
+    // }
+     
+    function addMarkersToMap(data) {
+    const bounds = new google.maps.LatLngBounds();
+
+    // Combine start, end, and events into one array with timestamps
+    let allPoints = [
+        { ...data, type: 'Start', timestamp: data.start_time },
+        { ...data, type: 'End', timestamp: data.end_time },
+        ...data.events.map(event => ({ ...event, type: 'Event' }))
+    ];
+
+    // Sort points by timestamp
+    allPoints.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+
+    // Add markers for each point
+    allPoints.forEach((point, index) => {
+        const position = new google.maps.LatLng(point.start_latitude, point.start_longitude);
+        // const title = point.type === 'Event' ? `${point.kind} - ${point.type}` : point.type;
+        // const color = point.type === 'Event' ? getMarkerColor(point.kind, point.type) : (point.type === 'Start' ? 'green' : 'red');
+        
+    let title;
+    let color;
+
+    if (point.type === 'Event') {
+        // For event points, use kind and type in the title
+        title = `${point.kind} - ${point.type}`;
+        color = getMarkerColor(point.kind, point.type);
+    } else if (point.type === 'Start') {
+        // For the start point
+        title = 'Start';
+        color = 'green';
+    } else if (point.type === 'End') {
+        // For the end point
+        title = 'End';
+        color = 'blue';
+    } else {
+        // Default case, if needed
+        title = 'Point';
+        color = 'gray';
+    }
+
+
+
+        const marker = new google.maps.Marker({
+            position: position,
+            map: map,
+            title: title,
+            label: { text: `${index + 1}`, color: 'white' },
+            icon: {
+                path: google.maps.SymbolPath.CIRCLE,
+                scale: 7,
+                fillColor: color,
+                fillOpacity: 0.8,
+                strokeWeight: 0
+            }
+        });
+
+        // Optionally add an info window for each marker
+        const infoWindow = new google.maps.InfoWindow({
+            content: `<div>Type: ${point.type}</div>
+                      <div>Kind: ${point.kind || ''}</div>`
+        });
+
+        marker.addListener('click', () => {
+            infoWindow.open(map, marker);
+        });
+
+        bounds.extend(position);
+    });
+
+    map.fitBounds(bounds);
+}
+
+
+    // Function to populate the timeline
+    async function populateTimeline(data) {
+    let timelineHtml = '<div class="timeline">';
+    timelineHtml += `<div class="timeline-event left">
+    <div class="timeline-content">
+    <h4>Trip Starts</h4>
+    <p style="font-size:12px;">${data.start_time} at ${data.start_location.city}</p>
+    </div>
+    </div>`;
+
+    // Alternate classes for timeline events
+    let positionClass = 'right';
+
+    // Loop through each event and create timeline HTML
+    for (const event of data.events) {
+    const locationName = await getReverseGeocodingData(event.start_latitude, event.start_longitude);
+    const eventTime = new Date(event.start_timestamp * 1000).toLocaleString();
+
+    timelineHtml += `<div class="timeline-event ${positionClass}">
+    <div class="timeline-content">
+    <h4>${eventTime}</h4>
+    <p style="font-size:12px;">${event.kind} (${event.type}) in ${locationName}</p>
+    </div>
+    </div>`;
+
+    // Switch position class for next event
+    positionClass = positionClass === 'left' ? 'right' : 'left';
+    }
+
+    timelineHtml += `<div class="timeline-event ${positionClass}">
+    <div class="timeline-content">
+    <h4>Trip End</h4>
+    <p style="font-size:12px;">${data.end_time} at ${data.end_location.city}</p>
+    </div>
+    </div>`;
+    timelineHtml += '</div>';
+
+    return timelineHtml;
+    }
+
+    async function getReverseGeocodingData(lat, lng) {
+    const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=AIzaSyAfShmyZNMPEc8TBw1Ym6uKSbjNClKyPS8`);
+    const data = await response.json();
+    if (data.status === 'OK') {
+    return data.results[0].formatted_address;
+    } else {
+    return `${lat}, ${lng}`; // Fallback to coordinates if geocoding fails
+    }
+    }
+
+
+    document.querySelectorAll('.table-container table td').forEach(cell => {
+    cell.addEventListener('click', async function() {
+    var rowIndex = this.parentElement.rowIndex;
+    alert("Row Number: " + rowIndex);
+
+    try {
+    const response = await fetch('/tripDetails', {
+    method: 'POST',
+    headers: {
+    'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ rowIndex: rowIndex })
+    });
+    if (!response.ok) {
+    throw new Error('Network response was not ok');
+    }
+    const data = await response.json();
+    console.log("tripdetails==>", data);
+
+    initMap(data);
+    addMarkersToMap(data);
+    const timelineHtml = await populateTimeline(data);
+    document.getElementById('timeline-container').innerHTML = timelineHtml;
+    document.getElementById('details-container').style.display = 'block';
+
+
+
+    // Populate map
+    const startLatLng = new google.maps.LatLng(data.start_latitude, data.start_longitude);
+    const endLatLng = new google.maps.LatLng(data.end_latitude, data.end_longitude);
+    map.setCenter(startLatLng);
+    } catch (error) {
+    console.error('Fetch error:', error);
+    }
+    });
+    });
+
+
+    </script>
+     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAfShmyZNMPEc8TBw1Ym6uKSbjNClKyPS8&callback=initMap" async defer></script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
